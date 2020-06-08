@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="description" content="google app script and google sheet api">
+	<meta name="author" content="">
+	<title>今天做什麼 | 下班新鮮試</title>
+	<!-- Custom styles for this template -->
+	<link href="./css/style.css" rel="stylesheet">
+	<noscript>你目前的瀏覽器不支援(或未啟用)JavaScript。</noscript>
+</head>
+<body>
+	<!-- Page Content -->
+	<div class="main">
+		<div class="typeContainer">
+			<div class="typeText">C:\Users\Admin>
+				<div class="keyText"></div><div class="cursor"></div>
+			</div>
+		</div>
+
+		<div class="cardContainer">
+			<div class="wrap"></div>
+			<div id="wall"></div>
+		</div>
+
+		<div class="settingCard">
+			<button type="button" class="start">開始</button>
+			<button type="button" class="setting">卡片設定</button>
+		</div>
+
+		<div class="mask" style="display:none">
+			<div id="msg" style="display:none"></div>
+
+			<div class="settingForm">
+				<div class="itemGroup">
+					<h3>項目設定</h3>
+					<button type="button" class="addItem">新增項目</button>
+					<table>
+						<thead>
+							<tr>
+								<th>序號</th>
+								<th>卡片項目</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
+	
+				<div class="buttonAction">
+					<button type="button" class="save">儲存</button>
+					<button type="button" class="close">關閉</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="./js/main.js"></script>
+</body>
+</html>
