@@ -122,11 +122,7 @@ $(function(){
 		$('tbody').append(str);
 
 		let inputEle = document.querySelectorAll('input[type=text]');
-		for(i=0; i<inputEle.length; i++){
-			if(i+1 == inputEle.length){
-				inputEle[i].focus();
-			}
-		}
+		inputEle[inputEle.length - 1].focus();
 	});
 });
 
@@ -354,44 +350,42 @@ function keyDetection(){
 
 
 /* typewriter effect es6 */
-const typedTextSpan = document.querySelector(".keyText");
-const cursorSpan = document.querySelector(".cursor");
+const keyTextDiv = document.querySelector(".keyText");
+const cursorDiv = document.querySelector(".cursor");
 
-const textArray = ["今天做什麼", "下班新鮮試"];
+const textArray = ["今天做什麼", "下班新鮮試", "su root", "password", "cd ./home/root"];
 const typingDelay = 200;
 const erasingDelay = 100;
 const newTextDelay = 2000; // Delay between current and next text
 let textArrayIndex = 0;
 let charIndex = 0;
 
-function type() {
+function write() {
 	if (charIndex < textArray[textArrayIndex].length) {
-		if (!cursorSpan.classList.contains("typing")) cursorSpan.classList.add("typing");
-		typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
+		if (!cursorDiv.classList.contains("typing")) cursorDiv.classList.add("typing");
+		keyTextDiv.textContent += textArray[textArrayIndex].charAt(charIndex);
 		charIndex++;
-		setTimeout(type, typingDelay);
-	}
-	else {
-		cursorSpan.classList.remove("typing");
-		setTimeout(erase, newTextDelay);
+		setTimeout(write, typingDelay);
+	} else {
+		cursorDiv.classList.remove("typing");
+		setTimeout(backspace, newTextDelay);
 	}
 }
 
-function erase() {
+function backspace() {
 	if (charIndex > 0) {
-		if (!cursorSpan.classList.contains("typing")) cursorSpan.classList.add("typing");
-		typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex - 1);
+		if (!cursorDiv.classList.contains("typing")) cursorDiv.classList.add("typing");
+		keyTextDiv.textContent = textArray[textArrayIndex].substring(0, charIndex - 1);
 		charIndex--;
-		setTimeout(erase, erasingDelay);
-	}
-	else {
-		cursorSpan.classList.remove("typing");
+		setTimeout(backspace, erasingDelay);
+	} else {
+		cursorDiv.classList.remove("typing");
 		textArrayIndex++;
 		if (textArrayIndex >= textArray.length) textArrayIndex = 0;
-		setTimeout(type, typingDelay + 1100);
+		setTimeout(write, typingDelay + 1100);
 	}
 }
 
 document.addEventListener("DOMContentLoaded", function () { // On DOM Load initiate the effect
-	if (textArray.length) setTimeout(type, newTextDelay + 250);
+	if (textArray.length) setTimeout(write, newTextDelay + 250);
 });
