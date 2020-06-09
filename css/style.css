@@ -144,7 +144,7 @@ a:hover {
 	height: 100%;
 	/* max-width: 1024px;
 	max-height: 768px; */
-	max-width: 800px;
+	max-width: 780px;
 	max-height: 550px;
 	position: absolute;
 	margin: auto;
@@ -527,7 +527,7 @@ button.addItem:focus {
 }
 
 button:not(:last-of-type) {
-	margin-right: 4px;
+	margin-right: 10px;
 }
 /* form ele end */
 
