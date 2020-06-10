@@ -61,7 +61,7 @@ $(function(){
 		document.querySelector('.mask').style.display='flex';
 		setTimeout(function(){
 			$('.mask').addClass('show');
-			document.querySelector('.settingForm').style.bottom = '10%';
+			document.querySelector('.settingForm').style.top = '-5%';
 		}, 100);
 	});
 
@@ -92,7 +92,7 @@ $(function(){
 	});
 
 	$('.close').click(function(){
-		document.querySelector('.settingForm').style.bottom = '20%';
+		document.querySelector('.settingForm').style.top = '-10%';
 		// $('.mask').removeClass('show');
 		setTimeout(function(){
 			$('.mask').removeClass('show');
