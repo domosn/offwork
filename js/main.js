@@ -1,16 +1,16 @@
-let cards=document.getElementsByClassName('card');//取得所有的卡牌元素
-let fronts=document.getElementsByClassName('front');//取得所有的卡面元素
-let backs=document.getElementsByClassName('back');//取得所有背面元素
-let gains=document.getElementsByClassName('gain');//取得所有分數顯示元素(同時作為card_mask)
+let cards=document.getElementsByClassName('card');
+let fronts=document.getElementsByClassName('front');
+let backs=document.getElementsByClassName('back');
+let gains=document.getElementsByClassName('gain');
 
-let gap=[1];//用來計算卡牌翻面時間的基準值，最多同時兩張牌，所以以陣列方式存放兩個值
-let frames=[0];//用來計算翻牌期間的幀數，作為條件判斷的值，最多同時兩張牌，所以以陣列方式存放兩個值
-let ani=new Array();//存放動畫執行時的計時物件
-let shows=new Array();//存放被翻牌的元素物件
+let gap=[1];
+let frames=[0];
+let ani=new Array();
+let shows=new Array();
 
-let itemData = [];//儲存google sheet中的item
-let feedBack='';//存取設定項目表中的tbody元素
-let getCard='';//存取卡片元素
+let itemData = [];
+let feedBack='';
+let getCard='';
 
 $(function(){
 	getData({'evt': 'read'});
@@ -19,31 +19,26 @@ $(function(){
 	$('.start').click(function(){
 		document.getElementsByClassName('mask')[0].style.display="none";
 
-		initial();//初始化全域變數及資料
+		initial();
 	
 		shuffle(itemData);
 
 		tempHideAll();
 
-		for(i = 0; i < backs.length; i++){//設定卡牌背面圖片
+		for(i = 0; i < backs.length; i++){
 			backs[i].innerHTML = i + 1;
 		}
-
-		//設定卡牌的資料內容及顯示圖片
+		
 		for(i = 0; i < fronts.length; i++){
-			fronts[i].setAttribute("data-type", itemData[i]);//設定資料內容
+			fronts[i].setAttribute("data-type", itemData[i]);
 			fronts[i].innerHTML = itemData[i];
 		}
-
-		//設定卡牌的點擊偵測事件
+		
 		for(i = 0; i < cards.length; i++){
-
-			//卡牌點擊事件綁定函式，發生onclick時才會去執行
 			cards[i].onclick=function cardClick(){
 				gap[0]=1;
-				document.getElementById("wall").style.display="block";//把透明牆打開，以防誤點
+				document.getElementById("wall").style.display="block";
 
-				//判斷陣列中是否有重覆的元素以及元素是否是己經完成的牌卡
 				if(shows.indexOf(this) == -1 && this.style.animationName != "opa"){
 					shows.push(this);
 					ani[0]=setInterval(fade, 10, this, 0)
@@ -80,7 +75,7 @@ $(function(){
 		
 		if(newNum < 2){
 			alert('項目不可少於2個');
-			document.querySelector('tbody').innerHTML=feedBack;//還原表格內容
+			document.querySelector('tbody').innerHTML=feedBack;
 			return;
 		}
 
@@ -99,7 +94,7 @@ $(function(){
 		}, 100);
 		setTimeout(function(){
 			document.querySelector('.mask').style.display='none';
-			document.querySelector('tbody').innerHTML=feedBack;//還原表格內容
+			document.querySelector('tbody').innerHTML=feedBack;
 		}, 300);
 	});
 
@@ -136,7 +131,7 @@ function getData(data) {
 			feedBack='';
 			getCard='';
 			itemData.length=0;
-			for(i = 0; i < response.data.items.length; i++){//取資料並產生卡片張數
+			for(i = 0; i < response.data.items.length; i++){
 				feedBack += '<tr>';
 				feedBack += '<td><span class="serial">' + (i + 1) + '</span></td>';//response.data.id[i]
 				feedBack += '<td><input type="text" value="' + response.data.items[i] + '" name="items" placeholder="請輸入今天想做的事項"></td>';
@@ -169,14 +164,12 @@ function saveData(data) {
 
 
 
-//初始化相關資料函式
 function initial(){
 	gap=[1];
 	frames=[0];
 	ani.length=0;
 	shows.length=0;
 
-	//將卡牌元素中的style屬性都先移除
 	for(i=0;i<cards.length;i++){
 		cards[i].removeAttribute('style');
 		cards[i].childNodes[0].removeAttribute('style');
@@ -189,12 +182,10 @@ function initial(){
 
 function continueTime() {
 	if(shows.length>0){
-		//有翻牌時，執行移除卡片遮罩(card_mask)、關閉訊息
 		shows[0].nextSibling.classList.remove("card_mask");
 		shows[1].nextSibling.classList.remove("card_mask");
 
 		document.getElementsByClassName('mask')[0].style.display="none";
-		// counterHandle=setInterval(timeCounter,1000)
 
 		shows[0].removeAttribute('style')
 		shows[1].removeAttribute('style')
@@ -204,7 +195,6 @@ function continueTime() {
 
 		shows.length=0;
 	} else {
-		//未翻牌時，執行關閉訊息
 		document.getElementsByClassName('mask')[0].style.display="none";
 	}
 }
@@ -244,7 +234,6 @@ function dialogBoxMsg(msg) {
 
 
 
-/* 沒問題的函式 */
 function shuffle(array){
 	for(i=0; i < array.length ; i++){
 		let seed = Math.floor(Math.random() * array.length);
@@ -273,9 +262,7 @@ function tempHideAll(){
 	}
 }
 
-//翻牌效果函式
 function fade(obj, d){
-	//判定翻轉到一半時，交換要顯示的牌面內容
 	if(frames[d]==10){
 		if(obj.childNodes[0].style.display=="none" || obj.childNodes[0].style.display==""){
 			obj.childNodes[1].style.display="none";
@@ -286,7 +273,6 @@ function fade(obj, d){
 		}
 	}
 
-	//根據不同的幀數來決定要進行的動作  
 	if(frames[d]>=20){
 		if(shows.length<1){
 			document.getElementById("wall").style.display="none";
@@ -338,9 +324,6 @@ function keyDetection(){
 		}
 	}
 }
-/* 沒問題的函式 */
-
-
 
 
 
